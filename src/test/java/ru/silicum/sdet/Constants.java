@@ -2,6 +2,7 @@ package ru.silicum.sdet;
 
 import ru.silicum.sdet.enums.Genders;
 
+import java.io.File;
 import java.time.LocalDate;
 
 public class Constants {
@@ -19,4 +20,6 @@ public class Constants {
     public static final String STATE = "NCR";
     public static final String CITY = "Delhi";
     public static final String SUCCESSFUL_DIALOG_TITLE = "Thanks for submitting the form";
+    public static final String PICTURE_FILE_PATH = "src/test/resources/jackal.jpg";
+    public static final File PICTURE_FILE = new File(PICTURE_FILE_PATH);
 }

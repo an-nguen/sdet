@@ -9,6 +9,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import ru.silicum.sdet.enums.Genders;
 
+import java.io.File;
 import java.time.LocalDate;
 import java.util.*;
 
@@ -30,6 +31,9 @@ public class PracticeFormPage {
 
     @FindBy(css = "div#dateOfBirth")
     private WebElement dateOfBirthContainer;
+
+    @FindBy(css = "input[type='file']")
+    private WebElement pictureFileInput;
 
     @FindBy(id = "subjectsInput")
     private WebElement subjectsInput;
@@ -150,4 +154,7 @@ public class PracticeFormPage {
         driver.quit();
     }
 
+    public void uploadPicture(File picture) {
+        pictureFileInput.sendKeys(picture.getAbsolutePath());
+    }
 }
