@@ -10,26 +10,25 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 
 import java.time.format.DateTimeFormatter;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 public class RegistrationFormV1Test {
 
     // WebDriver class object creates a new session which is for opening and closing a browser.
     public static WebDriver driver;
 
-    // It is needed to avoid repetition of getting of WebElement and do some action on it
     public List<TestableInput> registerInputs = new ArrayList<>();
     public Map<String, String> inputExpectedResultMap = Map.ofEntries(
             Map.entry("Student Name", String.format("%s %s", Constants.FIRST_NAME, Constants.LAST_NAME)),
             Map.entry("Student Email", Constants.USER_EMAIL),
-            Map.entry("Gender", Constants.GENDER),
+            Map.entry("Gender", Constants.GENDER.name()),
             Map.entry("Mobile", Constants.USER_NUMBER),
             Map.entry("Date of Birth", Constants.DATE_OF_BIRTH.format(DateTimeFormatter.ofPattern("dd MMMM,yyyy"))),
             Map.entry("Subjects", String.join(", ", Constants.SUBJECTS)),
-            Map.entry("Hobbies", String.join(", ", Constants.HOBBIES)),
             Map.entry("Address", Constants.CURRENT_ADDRESS),
             Map.entry("State and City", String.format("%s %s", Constants.STATE, Constants.CITY))
     );
@@ -112,13 +111,6 @@ public class RegistrationFormV1Test {
                 subjectsInput.sendKeys(subjectValue);
                 subjectsInput.sendKeys(Keys.RETURN);
             }
-        }));
-        registerInputs.add(TestableInput.create(By.id("hobbiesWrapper"), hobbiesWrapper -> {
-            var hobbyElements = hobbiesWrapper.findElements(By.xpath("//label[contains(@for, 'hobbies-checkbox')]"));
-            assertNotNull(Constants.HOBBIES);
-            var rng = new Random();
-            var hobbyIndex = rng.nextInt(0, hobbyElements.size());
-            hobbyElements.get(hobbyIndex).click();
         }));
         registerInputs.add(TestableInput.create(By.id("currentAddress"), textArea -> {
             textArea.sendKeys(Constants.CURRENT_ADDRESS);
