@@ -7,6 +7,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindAll;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import ru.silicum.sdet.Constants;
 import ru.silicum.sdet.enums.Genders;
 
 import java.io.File;
@@ -83,7 +84,7 @@ public class PracticeFormPage {
         phoneNumberInput.sendKeys(phoneNumber);
     }
 
-    public void enterDateBirth(LocalDate date) {
+    public void enterDateOfBirth(LocalDate date) {
         dateOfBirthContainer.click();
         // Open a datepicker by clicking at input
         dateOfBirthContainer.findElement(By.className("form-control"))
@@ -156,5 +157,47 @@ public class PracticeFormPage {
 
     public void uploadPicture(File picture) {
         pictureFileInput.sendKeys(picture.getAbsolutePath());
+    }
+
+    public String getActualStudentName() {
+        return getActualValue(Constants.STUDENT_NAME);
+    }
+
+    public String getActualStudentEmail() {
+        return getActualValue(Constants.STUDENT_EMAIL);
+    }
+
+    public String getActualGender() {
+        return getActualValue(Constants.GENDER);
+    }
+
+    public String getActualMobile() {
+        return getActualValue(Constants.MOBILE);
+    }
+
+    public String getActualDateOfBirth() {
+        return getActualValue(Constants.DATE_OF_BIRTH);
+    }
+
+    public String getActualSubjects() {
+        return getActualValue(Constants.SUBJECTS);
+    }
+
+    public String getActualAddress() {
+        return getActualValue(Constants.ADDRESS);
+    }
+
+    public String getActualStateAndCity() {
+        return getActualValue(Constants.STATE_AND_CITY);
+    }
+
+    public String getActualPicture() {
+        return getActualValue(Constants.PICTURE);
+    }
+
+    private String getActualValue(String key) {
+        var table = driver.findElement(By.cssSelector("div[role='document'] table"));
+        var row = table.findElement(By.xpath(String.format("//tr[td[text()='%s']]", key)));
+        return row.findElements(By.cssSelector("td")).get(1).getText();
     }
 }
