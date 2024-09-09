@@ -1,9 +1,6 @@
 package ru.silicum.sdet;
 
-import io.qameta.allure.Description;
-import io.qameta.allure.Owner;
-import io.qameta.allure.Severity;
-import io.qameta.allure.SeverityLevel;
+import io.qameta.allure.*;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
@@ -30,6 +27,13 @@ public class RegistrationFormTest {
     @Severity(SeverityLevel.CRITICAL)
     @Owner("An Nguyen")
     public void testRegistrationForm() {
+        arrangeStep();
+        actStep();
+        assertStep();
+    }
+
+    @Step("Arrange")
+    public void arrangeStep() {
         formPage.enterFirstName(TestData.FIRST_NAME);
         formPage.enterLastName(TestData.LAST_NAME);
         formPage.enterEmail(TestData.USER_EMAIL);
@@ -41,11 +45,16 @@ public class RegistrationFormTest {
         formPage.enterCurrentAddress(TestData.CURRENT_ADDRESS);
         formPage.enterState(TestData.STATE);
         formPage.enterCity(TestData.CITY);
+    }
 
+    @Step("Act")
+    public void actStep() {
         formPage.submitForm();
-        var actualDialogTitle = formPage.getSubmissionEndDialogTitle();
+    }
 
-        assertEquals(Constants.SUCCESSFUL_DIALOG_TITLE, actualDialogTitle, "Dialog title mismatch");
+    @Step("Assert")
+    public void assertStep() {
+        assertEquals(Constants.SUCCESSFUL_DIALOG_TITLE, formPage.getSubmissionEndDialogTitle(), "Dialog title mismatch");
         assertEquals(TestData.STUDENT_NAME, formPage.getActualStudentName(), "Student name mismatch");
         assertEquals(TestData.USER_EMAIL, formPage.getActualStudentEmail(), "Student email mismatch");
         assertEquals(TestData.GENDER.name(), formPage.getActualGender(), "Gender mismatch");
